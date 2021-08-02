@@ -147,7 +147,7 @@
         <div class="row justify-content-center mb-3">
           <div class="col-md-6">
             <!-- Alerts -->
-            <div class="alert alert-success alert-dismissible fade show d-none" role="alert">
+            <div class="my-alert alert-success alert-dismissible fade show d-none" role="alert">
               <strong>Terimakasih!</strong> Pesan anda sudah kami terima.
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -195,10 +195,17 @@
     -->
     <script>
       const scriptURL = 'https://script.google.com/macros/s/AKfycbymUYkcT2sTay6bEkPVbs0bbgsc6HLzc7AJUVMrsliHqTzz0p7EavOM2XE0f7wAgg/exec'
-      const form = document.forms['submit-to-google-sheet']
+      const form = document.forms['submit-to-google-sheet'];
+      const btnKirim = document.querySelector('.btn-kirim');
+      const btnLoading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-alert')
     
-      form.addEventListener('submit', e => {
-        e.preventDefault()
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Ketika Button Submit Diklik
+        // Tampilkan Button Loading, Hilangkan Button Kirim
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
           .then(response => console.log('Success!', response))
           .catch(error => console.error('Error!', error.message))
