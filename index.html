@@ -147,7 +147,7 @@
         <div class="row justify-content-center mb-3">
           <div class="col-md-6">
             <!-- Alerts -->
-            <div class="my-alert alert-success alert-dismissible fade show d-none" role="alert">
+            <div class="alert alert-success alert-dismissible fade show d-none" role="alert">
               <strong>Terimakasih!</strong> Pesan anda sudah kami terima.
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -198,18 +198,27 @@
       const form = document.forms['submit-to-google-sheet'];
       const btnKirim = document.querySelector('.btn-kirim');
       const btnLoading = document.querySelector('.btn-loading');
-      const myAlert = document.querySelector('.my-alert')
-    
+      const myAlert = document.querySelector('.alert');
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Ketika Button Submit Diklik
-        // Tampilkan Button Loading, Hilangkan Button Kirim
+        // ketika tombol submit diklik
+        // tampilkan tombol loading, hilangkan tombol kirim
         btnLoading.classList.toggle('d-none');
         btnKirim.classList.toggle('d-none');
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-          .then(response => console.log('Success!', response))
-          .catch(error => console.error('Error!', error.message))
-      })
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then((response) => {
+            // tampilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            // tampilkan alert
+            myAlert.classList.toggle('d-none');
+            // reset formnya
+            form.reset();
+            console.log('Success!', response);
+          })
+          .catch((error) => console.error('Error!', error.message));
+      });
     </script>
   </body>
 </html>
